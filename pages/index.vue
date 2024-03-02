@@ -17,7 +17,7 @@
 <style lang="scss">
 .login-container {
   color: $primary;
-  background-color: $gray;
+  background-color: $background;
   height: 100vh;
   display: flex;
   justify-content: center;

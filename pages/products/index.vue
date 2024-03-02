@@ -1,5 +1,7 @@
 <template>
-  <section>Products</section>
+  <NuxtLayout name="dashboard">
+    <section>Products</section>
+  </NuxtLayout>
 </template>
 
 <script lang="ts"></script>

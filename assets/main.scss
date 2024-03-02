@@ -5,14 +5,23 @@ $primary: #055b9b;
 $secondary: #fecf5e;
 $white: #ffffff;
 $gray: #c3c3c3;
+$lightGray: #f3f3f3;
+$text: #363636;
 
 body {
+  color: $text;
   padding: 0;
   margin: 0;
+  background-color: $lightGray;
   box-sizing: border-box;
   font-family: "Roboto Condensed", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; /* Para Firefox no MacOS */
+}
+
+ul,
+li {
+  margin: 0;
 }
 
 .btn-primary {

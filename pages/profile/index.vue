@@ -1,5 +1,7 @@
 <template>
-  <section>Profile</section>
+  <NuxtLayout name="dashboard">
+    <section>Profile</section>
+  </NuxtLayout>
 </template>
 
 <script lang="ts"></script>
