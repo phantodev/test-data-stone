@@ -3,7 +3,7 @@ export default defineEventHandler((event) => {
     products: [
       {
         id: 1,
-        name: "Smartphone X",
+        name: "Smartphone Iphone X",
         brand: "TechCo",
         price: 799.99,
         description: "The latest flagship smartphone with advanced features.",
