@@ -1,17 +1,19 @@
 <script lang="ts"></script>
 
 <template>
-  <section class="login-container">
-    <section class="login-form">
-      <section class="login-header">
-        <img
-          src="../assets/images/logo-data-stone.png"
-          alt="Logo da Empresa Data Stone"
-          width="284" />
+  <NuxtLayout>
+    <section class="login-container">
+      <section class="login-form">
+        <section class="login-header">
+          <img
+            src="../assets/images/logo-data-stone.png"
+            alt="Logo da Empresa Data Stone"
+            width="284" />
+        </section>
+        <LoginForm />
       </section>
-      <LoginForm />
     </section>
-  </section>
+  </NuxtLayout>
 </template>
 
 <style lang="scss">

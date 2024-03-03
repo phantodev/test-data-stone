@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useAuthStore } from "../stores/AuthStore";
+const authStore = useAuthStore();
 const route = useRoute();
 
 // A função `isCurrentRoute` é uma função auxiliar que usa um `routePath`
@@ -10,10 +12,6 @@ const route = useRoute();
 // rota específica é a rota atualmente ativa no menu de navegação.
 function isCurrentRoute(routePath: string): boolean {
   return route.path === routePath;
-}
-
-function handleLogout() {
-  navigateTo("/");
 }
 </script>
 
@@ -38,7 +36,7 @@ function handleLogout() {
         <img src="../assets/images/profile.svg" alt="" class="menu-icons" />
         <span>Meu Perfil</span>
       </li>
-      <li @click="handleLogout()">
+      <li @click="authStore.logout">
         <img src="../assets/images/logout.svg" alt="" class="menu-icons" />
         <span>Logout</span>
       </li>

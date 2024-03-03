@@ -9,6 +9,10 @@ const email = ref<string>("");
 const password = ref<string>("");
 const isLoading = ref<boolean>(false);
 
+// Esta `função assíncrona handleLogin()` é uma função responsável por lidar com o
+//processo de login. Aqui está um resumo do que ele faz: Acessa minha rota de Login feita no próprio nuxt.
+// O retorno da rota caso sucesso armazena as informações em um estato do PINIA que é persistido no Localstorage
+// Caso o retorno disparar o erro de não autorizado, um toast é disparado com a mensagem de erro.
 async function handleLogin() {
   isLoading.value = true;
   const { data: responseData, error } = await useFetch<ILoginResponse>(
