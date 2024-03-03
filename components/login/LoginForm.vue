@@ -1,11 +1,51 @@
+<script setup lang="ts">
+import type { ILoginResponse } from "../../types/Login";
+import { useToast } from "vue-toastification";
+import { useAuthStore } from "../../stores/AuthStore";
+const authStore = useAuthStore();
+
+const toast = useToast();
+const email = ref<string>("");
+const password = ref<string>("");
+const isLoading = ref<boolean>(false);
+
+async function handleLogin() {
+  isLoading.value = true;
+  const { data: responseData, error } = await useFetch<ILoginResponse>(
+    "/api/login",
+    {
+      method: "post",
+      body: {
+        email: email.value,
+        password: password.value,
+      },
+    }
+  );
+  if (responseData.value !== null) {
+    authStore.token = responseData.value.data.token;
+    authStore.user = responseData.value.data.user;
+    navigateTo("/customers");
+  }
+  if (error.value !== null) {
+    isLoading.value = false;
+    toast.error("Credenciais inválidas!");
+  }
+}
+</script>
+
 <template>
   <section class="container-input">
     <label class="label-input" for="email">E-mail</label>
-    <input class="input-text" type="text" name="" id="email" />
+    <input class="input-text" type="text" name="" id="email" v-model="email" />
   </section>
   <section class="container-input">
     <label class="label-input" for="password">Senha</label>
-    <input class="input-text" type="text" name="" id="password" />
+    <input
+      class="input-text"
+      type="text"
+      name=""
+      id="password"
+      v-model="password" />
   </section>
   <section class="container-input-checkbox">
     <label class="container-check">
@@ -16,7 +56,12 @@
     <button class="btn-secondary">Esqueci Minha Senha</button>
   </section>
 
-  <button class="btn-primary" type="button">Entrar</button>
+  <button @click="handleLogin()" class="btn-primary" type="button">
+    <span v-if="!isLoading"> Entrar </span>
+    <span v-else>
+      <img src="../../assets/images/spinner.svg" width="24" alt=""
+    /></span>
+  </button>
 </template>
 
 <script lang="ts"></script>

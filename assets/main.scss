@@ -10,6 +10,8 @@ $text: #363636;
 
 * {
   box-sizing: border-box;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 body {
@@ -164,8 +166,8 @@ li {
 
   /* Criando um checkmark customizado */
   .checkmark:after {
-    left: 9px;
-    top: 5px;
+    left: 7px;
+    top: 3px;
     width: 5px;
     height: 10px;
     border: solid white;

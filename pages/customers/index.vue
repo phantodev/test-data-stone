@@ -31,11 +31,9 @@ function changeAction(action: string) {
             color="fluent:add-12-filled" />Lista de Clientes
         </button>
       </section>
-      <section class="content-customers" v-if="currentAction === 'list'">
-        <CustomersTableList />
-      </section>
-      <section v-else>
-        <CustomersAddForm />
+      <section class="content-customers">
+        <CustomersTableList v-if="currentAction === 'list'" />
+        <CustomersAddForm v-else />
       </section>
     </section>
   </NuxtLayout>
@@ -52,8 +50,7 @@ function changeAction(action: string) {
 .container-customers {
   padding: 2rem;
   margin-top: 1rem;
-  width: 100%;
-  max-width: 1280px;
+  width: 1280px;
   background-color: $white;
   border-radius: 1rem;
   box-shadow: 15px 15px 100px 15px rgba(0, 0, 0, 0.2);
