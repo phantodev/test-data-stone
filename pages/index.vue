@@ -40,9 +40,9 @@
 }
 @media (max-width: 420px) {
   .login-container {
-    background-color: $white; // Altera a cor de fundo para branco em telas menores que 420px
+    background-color: $white;
     .login-form {
-      box-shadow: none; // Remove a sombra em telas menores que 420px
+      box-shadow: none;
     }
   }
 }

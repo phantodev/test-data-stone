@@ -1,9 +1,30 @@
 <script setup lang="ts">
-const currentAction = ref<string>("list");
+import { useToast } from "vue-toastification";
+import { useCustomerStore } from "../../stores/CustomerStore";
+import type { IGetAllCustomersResponse } from "../../types/Customers";
 
-function changeAction(action: string) {
+const customerStore = useCustomerStore();
+const toast = useToast();
+const currentAction = ref<string>("list");
+const isLoading = ref<boolean>(false);
+
+function changeAction(action: string): void {
   currentAction.value = action;
 }
+
+async function getAllCustomers() {
+  isLoading.value = true;
+  const { data: responseData, error } =
+    await useFetch<IGetAllCustomersResponse>("/api/customers");
+  if (responseData.value !== null) {
+    customerStore.customers = responseData.value.customers;
+  }
+  if (error.value !== null) {
+    isLoading.value = false;
+    toast.error("Banco fora do AR. Chame o suporte!");
+  }
+}
+getAllCustomers();
 </script>
 
 <template>

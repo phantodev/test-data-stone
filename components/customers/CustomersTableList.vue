@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import { useCustomerStore } from "../../stores/CustomerStore";
+import type { ICustomers } from "../../types/Customers";
+
+const customerStore = useCustomerStore();
+</script>
+
 <template>
   <section class="container-table">
     <table>
@@ -13,193 +20,16 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>1</td>
-          <td>John Doe</td>
-          <td>61259789</td>
-          <td>john.doe@example.com</td>
-          <td>(123) 456-7890</td>
-          <td><span class="badge-active">Sim</span></td>
-          <td class="row-btn-edit-bin">
-            <button class="btn-edit-bin">
-              <img
-                src="../../assets/images/edit.svg"
-                alt="Icone de Edição de Clientes" />
-            </button>
-            <button>
-              <img
-                src="../../assets/images/bin.svg"
-                alt="Icone de Exclusão de Clientes" />
-            </button>
+        <tr v-for="(customer, index) in customerStore.customers" :key="index">
+          <td>{{ customer.id }}</td>
+          <td>{{ customer.name }}</td>
+          <td>{{ customer.document }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.phone }}</td>
+          <td>
+            <span class="badge-active" v-if="customer.active">Sim</span
+            ><span class="badge-inactive" v-else>Não</span>
           </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Jane Smith</td>
-          <td>28</td>
-          <td>jane.smith@example.com</td>
-          <td>(234) 567-8901</td>
-          <td><span class="badge-active">Sim</span></td>
-          <td class="row-btn-edit-bin">
-            <button class="btn-edit-bin">
-              <img
-                src="../../assets/images/edit.svg"
-                alt="Icone de Edição de Clientes" />
-            </button>
-            <button>
-              <img
-                src="../../assets/images/bin.svg"
-                alt="Icone de Exclusão de Clientes" />
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Michael Johnson</td>
-          <td>45</td>
-          <td>michael.johnson@example.com</td>
-          <td>(345) 678-9012</td>
-          <td><span class="badge-active">Sim</span></td>
-          <td class="row-btn-edit-bin">
-            <button class="btn-edit-bin">
-              <img
-                src="../../assets/images/edit.svg"
-                alt="Icone de Edição de Clientes" />
-            </button>
-            <button>
-              <img
-                src="../../assets/images/bin.svg"
-                alt="Icone de Exclusão de Clientes" />
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Emily Brown</td>
-          <td>32</td>
-          <td>emily.brown@example.com</td>
-          <td>(456) 789-0123</td>
-          <td><span class="badge-inactive">Não</span></td>
-          <td class="row-btn-edit-bin">
-            <button class="btn-edit-bin">
-              <img
-                src="../../assets/images/edit.svg"
-                alt="Icone de Edição de Clientes" />
-            </button>
-            <button>
-              <img
-                src="../../assets/images/bin.svg"
-                alt="Icone de Exclusão de Clientes" />
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Daniel Wilson</td>
-          <td>40</td>
-          <td>daniel.wilson@example.com</td>
-          <td>(567) 890-1234</td>
-          <td><span class="badge-active">Sim</span></td>
-          <td class="row-btn-edit-bin">
-            <button class="btn-edit-bin">
-              <img
-                src="../../assets/images/edit.svg"
-                alt="Icone de Edição de Clientes" />
-            </button>
-            <button>
-              <img
-                src="../../assets/images/bin.svg"
-                alt="Icone de Exclusão de Clientes" />
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>Sarah Taylor</td>
-          <td>29</td>
-          <td>sarah.taylor@example.com</td>
-          <td>(678) 901-2345</td>
-          <td><span class="badge-inactive">Não</span></td>
-          <td class="row-btn-edit-bin">
-            <button class="btn-edit-bin">
-              <img
-                src="../../assets/images/edit.svg"
-                alt="Icone de Edição de Clientes" />
-            </button>
-            <button>
-              <img
-                src="../../assets/images/bin.svg"
-                alt="Icone de Exclusão de Clientes" />
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>Christopher Martinez</td>
-          <td>38</td>
-          <td>christopher.martinez@example.com</td>
-          <td>(789) 012-3456</td>
-          <td><span class="badge-inactive">Não</span></td>
-          <td class="row-btn-edit-bin">
-            <button class="btn-edit-bin">
-              <img
-                src="../../assets/images/edit.svg"
-                alt="Icone de Edição de Clientes" />
-            </button>
-            <button>
-              <img
-                src="../../assets/images/bin.svg"
-                alt="Icone de Exclusão de Clientes" />
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>8</td>
-          <td>Amanda Anderson</td>
-          <td>31</td>
-          <td>amanda.anderson@example.com</td>
-          <td>(890) 123-4567</td>
-          <td><span class="badge-inactive">Não</span></td>
-          <td class="row-btn-edit-bin">
-            <button class="btn-edit-bin">
-              <img
-                src="../../assets/images/edit.svg"
-                alt="Icone de Edição de Clientes" />
-            </button>
-            <button>
-              <img
-                src="../../assets/images/bin.svg"
-                alt="Icone de Exclusão de Clientes" />
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>9</td>
-          <td>James Thomas</td>
-          <td>36</td>
-          <td>james.thomas@example.com</td>
-          <td>(901) 234-5678</td>
-          <td><span class="badge-inactive">Não</span></td>
-          <td class="row-btn-edit-bin">
-            <button class="btn-edit-bin">
-              <img
-                src="../../assets/images/edit.svg"
-                alt="Icone de Edição de Clientes" />
-            </button>
-            <button>
-              <img
-                src="../../assets/images/bin.svg"
-                alt="Icone de Exclusão de Clientes" />
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>10</td>
-          <td>Jessica Garcia</td>
-          <td>27</td>
-          <td>jessica.garcia@example.com</td>
-          <td>(012) 345-6789</td>
-          <td><span class="badge-inactive">Não</span></td>
           <td class="row-btn-edit-bin">
             <button class="btn-edit-bin">
               <img
@@ -226,8 +56,6 @@
     </section>
   </section>
 </template>
-
-<script lang="ts" setup></script>
 
 <style lang="scss" scoped>
 .container-table {
