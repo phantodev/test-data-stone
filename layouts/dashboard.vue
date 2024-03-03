@@ -10,7 +10,7 @@ const { width } = useWindowSize(); // Pegar a largura da tela para mostrar o men
       <NavbarDesktop v-if="width > 834" />
       <NavbarMobile v-else />
     </header>
-    <main>
+    <main class="container-main">
       <slot />
     </main>
   </section>
@@ -26,5 +26,10 @@ const { width } = useWindowSize(); // Pegar a largura da tela para mostrar o men
   padding-left: 2rem;
   padding-right: 2rem;
   box-shadow: 15px 15px 100px 15px rgba(0, 0, 0, 0.2);
+}
+.container-main {
+  display: flex;
+  justify-content: center;
+  padding: 1rem;
 }
 </style>

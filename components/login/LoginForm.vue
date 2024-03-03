@@ -22,12 +22,6 @@
 <script lang="ts"></script>
 
 <style lang="scss">
-.container-input {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
 .container-input-checkbox {
   display: flex;
   align-items: center;
