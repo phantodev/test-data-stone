@@ -2,6 +2,12 @@
 export default defineNuxtConfig({
   devtools: { enabled: false },
   modules: ["nuxt-icon"],
+  components: [
+    {
+      path: "~/components",
+      pathPrefix: false,
+    },
+  ],
   vite: {
     css: {
       preprocessorOptions: {

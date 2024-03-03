@@ -20,16 +20,23 @@ const { width } = useWindowSize(); // Pegar a largura da tela para mostrar o men
 .header {
   background-color: $white;
   height: 6rem;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding-left: 2rem;
   padding-right: 2rem;
-  box-shadow: 15px 15px 100px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 10px 20px 15px rgba(0, 0, 0, 0.1);
 }
 .container-main {
   display: flex;
   justify-content: center;
-  padding: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 7rem;
+  padding-bottom: 3rem;
 }
 </style>

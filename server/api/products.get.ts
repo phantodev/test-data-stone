@@ -3,63 +3,32 @@ export default defineEventHandler((event) => {
     products: [
       {
         id: 1,
-        name: "Smartphone Iphone X",
-        brand: "TechCo",
-        price: 799.99,
-        description: "The latest flagship smartphone with advanced features.",
-        image: "https://example.com/productX.jpg",
-        category: "Smartphones",
+        name: "Web Development",
+        description:
+          "Sistemas complexos de ERP ou CRM você pode contar com a nossa equipe para desenvolver os melhores projetos para sua empresa!",
+        active: true,
       },
       {
         id: 2,
-        name: "Laptop Pro",
-        brand: "EliteComputers",
-        price: 1299.99,
-        description: "Powerful laptop for professionals and gamers alike.",
-        image: "https://example.com/productLaptop.jpg",
-        category: "Laptops",
+        name: "Mobile Development",
+        description:
+          "Desenvolva os melhores aplicativos conosco. Seja uma startup nova ou um sistema para evoluir a organização da sua empresa.",
+        active: true,
       },
       {
         id: 3,
-        name: "Smart Watch 2000",
-        brand: "GadgetTech",
-        price: 199.99,
+        name: "Stone Station",
         description:
-          "Stay connected with this sleek and feature-rich smartwatch.",
-        image: "https://example.com/productSmartWatch.jpg",
-        category: "Wearable Devices",
+          " Alcance os seus resultados de forma simples e ágil. Deixe a sua empresa a um clique da informação que precisa. Nosso software é intuitivo, moderno, objetivo e inteligente, especialmente desenvolvido para áreas como cobrança, marketing & vendas.",
+        active: true,
       },
       {
         id: 4,
-        name: "Wireless Headphones",
-        brand: "SoundMaster",
-        price: 149.99,
+        name: "Stone Lab",
         description:
-          "Immerse yourself in your favorite music with these high-quality wireless headphones.",
-        image: "https://example.com/productHeadphones.jpg",
-        category: "Audio",
+          "O Stone Lab é o laboratório da Data Stone para desenvolvimento de projetos especiais e sob medida apoiados por tecnologias de ponta. ",
+        active: false,
       },
-      {
-        id: 5,
-        name: "4K Ultra HD TV",
-        brand: "VisionTech",
-        price: 1799.99,
-        description:
-          "Experience stunning clarity and vibrant colors with this 4K Ultra HD TV.",
-        image: "https://example.com/productTV.jpg",
-        category: "Televisions",
-      },
-      {
-        id: 6,
-        name: "Gaming Console X",
-        brand: "GameMaster",
-        price: 499.99,
-        description:
-          "Unlock a world of entertainment and gaming with this powerful gaming console.",
-        image: "https://example.com/productConsole.jpg",
-        category: "Gaming",
-      },
-      // Add more products as needed
     ],
   };
 });

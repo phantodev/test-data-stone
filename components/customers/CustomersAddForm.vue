@@ -1,7 +1,7 @@
 <template>
   <section>
     <form>
-      <div class="grid-container">
+      <section class="grid-container">
         <section class="container-input">
           <label class="label-input" for="name">Nome:</label>
           <input
@@ -48,7 +48,7 @@
         </section>
         <section class="container-input">
           <label class="label-input" for="city">Cliente Ativo?</label>
-          <section class="container-radios">
+          <section class="container-radios margin-top">
             <label>
               <input type="radio" name="userStatus" value="ativo" />
               Sim
@@ -61,7 +61,16 @@
             </label>
           </section>
         </section>
-      </div>
+      </section>
+      <section class="sub-title">
+        <img
+          src="../../assets/images/products.svg"
+          alt=""
+          class="menu-icons" />Vincular produtos ao cliente
+      </section>
+      <section>
+        <ProductsLinkCustomer />
+      </section>
       <button type="submit" class="btn-primary">
         <Icon
           name="fluent:add-12-filled"
@@ -90,53 +99,12 @@ form {
   width: 100%;
 }
 
-.container-radios {
-  display: flex;
-  align-items: center;
-  margin-top: 1rem;
-  column-gap: 0.5rem;
-
-  label {
-    display: flex;
-    align-items: center;
-  }
-
-  input[type="radio"] {
-    background-color: $background;
-    width: 20px;
-    height: 20px;
-    margin-right: 0.5rem;
-  }
-  input[type="radio"]:after {
-    width: 20px;
-    height: 20px;
-    border-radius: 20px;
-    top: -2px;
-    left: -1px;
-    position: relative;
-    background-color: #d1d3d1;
-    content: "";
-    display: inline-block;
-    visibility: visible;
-    border: 2px solid white;
-  }
-
-  input[type="radio"]:checked:after {
-    width: 20px;
-    height: 20px;
-    border-radius: 20px;
-    top: -2px;
-    left: -1px;
-    position: relative;
-    background-color: $primary;
-    content: "";
-    display: inline-block;
-    visibility: visible;
-    border: 2px solid white;
-  }
-}
-
 button {
   margin: auto;
+}
+
+.menu-icons {
+  height: 1.2rem;
+  width: 1.2rem;
 }
 </style>

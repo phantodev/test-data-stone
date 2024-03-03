@@ -3,29 +3,28 @@
     <thead>
       <tr>
         <th>ID</th>
-        <th>Nome</th>
-        <th>Descrição</th>
-        <th>Ativo</th>
+        <th>Produto</th>
+        <th>Vincular Produto</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>1</td>
-        <td>Web Development</td>
+        <td>Stone Lab</td>
         <td>
-          Sistemas complexos de ERP ou CRM você pode contar com a nossa equipe
-          para desenvolver os melhores projetos para sua empresa!
+          <section class="container-radios">
+            <label>
+              <input type="radio" name="stoneLab" value="ativo" />
+              Sim
+            </label>
+            <br />
+
+            <label>
+              <input type="radio" name="stoneLab" value="inativo" />
+              Não
+            </label>
+          </section>
         </td>
-        <td><span class="badge-active">Sim</span></td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>Mobile Development</td>
-        <td>
-          Desenvolva os melhores aplicativos conosco. Seja uma startup nova ou
-          um sistema para evoluir a organização da sua empresa.
-        </td>
-        <td><span class="badge-inactive">Não</span></td>
       </tr>
     </tbody>
   </table>
@@ -53,9 +52,27 @@ td {
   border-bottom: 1px solid #ddd;
   text-align: left;
   font-size: 0.875rem;
+  button {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+    img {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
+  }
 }
 th {
   background-color: #f2f2f2;
+}
+
+.row-btn-edit-bin {
+  display: flex;
+  align-items: center;
+  column-gap: 1rem;
 }
 
 .container-pagination {
@@ -76,13 +93,13 @@ th {
 
 .badge-inactive {
   @extend .badge;
-  background-color: rgb(170, 0, 0);
+  background-color: #aa0000;
   color: rgb(255, 220, 220);
 }
 
 .badge-active {
   @extend .badge;
   color: rgb(214, 255, 214);
-  background-color: rgb(0, 197, 0);
+  background-color: #00c500;
 }
 </style>
