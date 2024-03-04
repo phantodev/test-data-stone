@@ -32,7 +32,7 @@ async function addNewCustomer(): Promise<void> {
       useProducts: [],
       active: newCustomer.value.active,
     });
-    toast.success("Usuário adicionado com sucesso!");
+    toast.success("Cliente adicionado com sucesso!");
     newCustomer.value = {
       id: Math.floor(Math.random() * 1000), // Apenas uma simulação. Sabemos que é o BACK-END gera este número.
       name: "",
@@ -61,7 +61,7 @@ async function updateCustomer(): Promise<void> {
       useProducts: [],
       active: newCustomer.value.active,
     });
-    toast.success("Usuário atualizado com sucesso!");
+    toast.success("Clente atualizado com sucesso!");
   } catch (error) {
     toast.error("Não foi possível atualizar o cliente!");
   } finally {

@@ -1,43 +1,44 @@
 import { defineStore } from "pinia";
-import type { ICustomers } from "~/types/Customers";
+import type { IProducts } from "~/types/Products";
 
-export const useCustomerStore = defineStore("customerStore", () => {
+export const useProductStore = defineStore("productStore", () => {
   const showDeleteModal = ref<boolean>(false);
-  const customerToDeleteOrUpdate = ref<ICustomers | null>(null);
-  const customers = ref<ICustomers[] | null>(null);
+  const productToDeleteOrUpdate = ref<IProducts | null>(null);
+  const products = ref<IProducts[] | null>(null);
 
   /**
    * A função `addNewCustomer` adiciona de forma assíncrona um novo cliente a um array
    * após um atraso simulado.
-   * @param {ICustomers} newCustomer - O parâmetro `newCustomer` no
+   * @param {IProducts} newProduct - O parâmetro `newCustomer` no
    * A função `addNewCustomer` é do tipo `ICustomers`, e representa um novo
    * objeto cliente que está sendo adicionado a uma lista de clientes.
    */
-  async function addNewCustomer(newCustomer: ICustomers): Promise<void> {
+  async function addNewProduct(newProduct: IProducts): Promise<void> {
     // Simulando apenas uma lentidão na chamada com essa Promise.
     await new Promise((resolve) => {
       setTimeout(resolve, 2000);
     });
-    if (customers.value !== null) {
-      customers.value.push(newCustomer); // Adiciona o novo cliente ao array
+    if (products.value !== null) {
+      console.log("ENTROU 2");
+      products.value.push(newProduct); // Adiciona o novo cliente ao array
     }
   }
 
-  async function updateCustomer(updatedCustomer: ICustomers): Promise<void> {
+  async function updateProduct(updatedProduct: IProducts): Promise<void> {
     // Simulando apenas uma lentidão na chamada com essa Promise.
     await new Promise((resolve) => {
       setTimeout(resolve, 2000);
     });
     // Verifica se a lista de clientes não é nula
-    if (customers.value !== null) {
+    if (products.value !== null) {
       // Encontra o índice do cliente na lista com base no ID
-      const index = customers.value.findIndex(
-        (customer) => customer.id === updatedCustomer.id
+      const index = products.value.findIndex(
+        (product) => product.id === updatedProduct.id
       );
       // Se o cliente com o ID fornecido existir na lista
       if (index !== -1) {
         // Atualiza o cliente na lista com os novos dados
-        customers.value[index] = updatedCustomer;
+        products.value[index] = updatedProduct;
       }
     }
   }
@@ -45,45 +46,45 @@ export const useCustomerStore = defineStore("customerStore", () => {
   /**
    * A função `removeCustomer` remove de forma assíncrona um cliente de uma lista
    * após um atraso simulado.
-   * @param {number} idCustomer - O parâmetro `idCustomer` em `removeCustomer`
+   * @param {number} idProduct - O parâmetro `idCustomer` em `removeCustomer`
    *função é o identificador exclusivo do cliente que você deseja remover
    * a lista de clientes. Esta função simula um atraso de 2 segundos antes
    * remoção do cliente com o ID especificado da lista de clientes.
    */
 
-  async function removeCustomer(): Promise<void> {
+  async function removeProduct(): Promise<void> {
     // Simulando apenas uma lentidão na chamada com essa Promise.
     await new Promise((resolve) => {
       setTimeout(resolve, 2000);
     });
-    if (customers.value !== null) {
+    if (products.value !== null) {
       // Filtra a lista de clientes para excluir o cliente com o ID correspondente
       try {
-        customers.value = customers.value.filter(
-          (customer) => customer.id !== customerToDeleteOrUpdate.value?.id
+        products.value = products.value.filter(
+          (product) => product.id !== productToDeleteOrUpdate.value?.id
         );
         showDeleteModal.value = false;
-        customerToDeleteOrUpdate.value = null;
+        productToDeleteOrUpdate.value = null;
       } catch (error) {
         throw createError({
           statusCode: 409,
-          statusMessage: "Não foi possível deletar cliente!",
+          statusMessage: "Não foi possível deletar produto!",
         });
       }
     }
   }
 
   function $reset() {
-    customerToDeleteOrUpdate.value = null;
+    productToDeleteOrUpdate.value = null;
   }
 
   return {
     $reset,
     showDeleteModal,
-    customerToDeleteOrUpdate,
-    customers,
-    addNewCustomer,
-    updateCustomer,
-    removeCustomer,
+    productToDeleteOrUpdate,
+    products,
+    addNewProduct,
+    updateProduct,
+    removeProduct,
   };
 });

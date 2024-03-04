@@ -1,10 +1,12 @@
 <script setup lang="ts">
 import type { IResponseError } from "~/types/Customers";
 import { useCustomerStore } from "../stores/CustomerStore";
+import { useProductStore } from "../stores/ProductStore";
 import { useToast } from "vue-toastification";
 
 const toast = useToast();
 const customerStore = useCustomerStore();
+const productStore = useProductStore();
 const isDeleting = ref<boolean>(false);
 
 // A função `handleCloseModal` é responsável por fechar um modal relacionado a
@@ -17,15 +19,24 @@ const isDeleting = ref<boolean>(false);
 function handleCloseModal() {
   customerStore.showDeleteModal = false;
   customerStore.customerToDeleteOrUpdate = null;
+  productStore.showDeleteModal = false;
+  productStore.productToDeleteOrUpdate = null;
 }
 
-// A `função assíncrona handleRemoveCustomer()` é uma função assíncrona que é
-// responsável por lidar com a remoção de um cliente.
-async function handleRemoveCustomer() {
+// A `função assíncrona handleRemoveRecord()` é uma função que trata da remoção
+// de um cliente ou produto com base no estado atual da `customerStore` e
+// `productStore`.
+async function handleRemoveRecord() {
   try {
     isDeleting.value = true;
-    await customerStore.removeCustomer();
-    toast.success("Cliente excluído com sucesso!");
+    if (customerStore.customerToDeleteOrUpdate !== null) {
+      await customerStore.removeCustomer();
+      toast.success("Cliente excluído com sucesso!");
+    }
+    if (productStore.productToDeleteOrUpdate !== null) {
+      await productStore.removeProduct();
+      toast.success("Produto excluído com sucesso!");
+    }
   } catch (error) {
     toast.error((error as IResponseError).statusMessage);
   } finally {
@@ -37,7 +48,7 @@ async function handleRemoveCustomer() {
 <template>
   <section class="card">
     <img src="../assets/images/alert.svg" alt="" />
-    <section class="deleteHeading">Deletar Cliente</section>
+    <section class="deleteHeading">Deletar Registro</section>
     <section class="deleteDescription">
       Após a exclusão não poderemos recuper o registro. Deseja continuar?
     </section>
@@ -46,7 +57,7 @@ async function handleRemoveCustomer() {
       <button
         :disabled="isDeleting"
         class="acceptButton"
-        @click="handleRemoveCustomer">
+        @click="handleRemoveRecord">
         <span v-if="!isDeleting"> Permitir</span>
         <span v-else>
           <img src="../assets/images/spinner.svg" width="24" alt=""
@@ -103,6 +114,9 @@ async function handleRemoveCustomer() {
   display: flex;
   align-items: center;
   justify-content: center;
+  img {
+    margin-top: 0.2rem;
+  }
 }
 
 .declineButton {

@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useToast } from "vue-toastification";
 import { useCustomerStore } from "../../stores/CustomerStore";
+import { useProductStore } from "../../stores/ProductStore";
 import type { IGetAllCustomersResponse } from "../../types/Customers";
 
 const customerStore = useCustomerStore();
+const productStore = useProductStore();
 const toast = useToast();
 const currentAction = ref<string>("list");
 const isLoading = ref<boolean>(false);
@@ -25,6 +27,8 @@ async function getAllCustomers() {
   }
 }
 getAllCustomers();
+// Resetando o estado do PINIA de products
+productStore.$reset();
 </script>
 
 <template>

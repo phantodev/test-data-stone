@@ -1,9 +1,35 @@
 <script setup lang="ts">
+import { useToast } from "vue-toastification";
+import { useProductStore } from "../../stores/ProductStore";
+import { useCustomerStore } from "../../stores/CustomerStore";
+import type { IGetAllProductsResponse } from "../../types/Products";
+
+const productStore = useProductStore();
+const customerStore = useCustomerStore();
+const toast = useToast();
 const currentAction = ref<string>("list");
+const isLoading = ref<boolean>(false);
 
 function changeAction(action: string) {
   currentAction.value = action;
 }
+
+async function getAllProducts() {
+  isLoading.value = true;
+  const { data: responseData, error } = await useFetch<IGetAllProductsResponse>(
+    "/api/products"
+  );
+  if (responseData.value !== null) {
+    productStore.products = responseData.value.products;
+  }
+  if (error.value !== null) {
+    isLoading.value = false;
+    toast.error("Banco fora do AR. Chame o suporte!");
+  }
+}
+getAllProducts();
+// Resetando o estado do PINIA de customers
+customerStore.$reset();
 </script>
 
 <template>
@@ -31,11 +57,11 @@ function changeAction(action: string) {
             color="fluent:add-12-filled" />Lista de Produtos
         </button>
       </section>
-      <section class="content-customers" v-if="currentAction === 'list'">
-        <ProductsTableList />
-      </section>
-      <section v-else>
-        <ProductsAddForm />
+      <section class="content-customers">
+        <ProductsTableList
+          :changeAction="changeAction"
+          v-if="currentAction === 'list'" />
+        <ProductsAddForm v-else />
       </section>
     </section>
   </NuxtLayout>

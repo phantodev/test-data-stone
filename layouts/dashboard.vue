@@ -1,14 +1,18 @@
 <script setup lang="ts">
 import { useWindowSize } from "@vueuse/core";
 import { useCustomerStore } from "../stores/CustomerStore";
+import { useProductStore } from "../stores/ProductStore";
 
 const customerStore = useCustomerStore();
+const productStore = useProductStore();
 const { width } = useWindowSize(); // Pegar a largura da tela para mostrar o menu DESKTOP ou MOBILE, pois eles tem layouts diferentes.
 </script>
 
 <template>
   <Transition>
-    <section class="overlay-modal" v-if="customerStore.showDeleteModal">
+    <section
+      class="overlay-modal"
+      v-if="customerStore.showDeleteModal || productStore.showDeleteModal">
       <ModalDelete />
     </section>
   </Transition>
