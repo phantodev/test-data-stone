@@ -2,7 +2,8 @@ import { defineStore } from "pinia";
 import type { ICustomers } from "~/types/Customers";
 
 export const useCustomerStore = defineStore("customerStore", () => {
-  const showDeleModal = ref<boolean>(false);
+  const showDeleteModal = ref<boolean>(false);
+  const customerToDeleteOrUpdate = ref<ICustomers | null>(null);
   const customers = ref<ICustomers[] | null>(null);
 
   /**
@@ -30,21 +31,31 @@ export const useCustomerStore = defineStore("customerStore", () => {
    * remoção do cliente com o ID especificado da lista de clientes.
    */
 
-  async function removeCustomer(idCustomer: number): Promise<void> {
+  async function removeCustomer(): Promise<void> {
     // Simulando apenas uma lentidão na chamada com essa Promise.
     await new Promise((resolve) => {
       setTimeout(resolve, 2000);
     });
     if (customers.value !== null) {
       // Filtra a lista de clientes para excluir o cliente com o ID correspondente
-      customers.value = customers.value.filter(
-        (customer) => customer.id !== idCustomer
-      );
+      try {
+        customers.value = customers.value.filter(
+          (customer) => customer.id !== customerToDeleteOrUpdate.value?.id
+        );
+        showDeleteModal.value = false;
+        customerToDeleteOrUpdate.value = null;
+      } catch (error) {
+        throw createError({
+          statusCode: 409,
+          statusMessage: "Não foi possível deletar cliente!",
+        });
+      }
     }
   }
 
   return {
-    showDeleModal,
+    showDeleteModal,
+    customerToDeleteOrUpdate,
     customers,
     addNewCustomer,
     removeCustomer,

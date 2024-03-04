@@ -10,3 +10,8 @@ export interface ICustomers {
   phone: string;
   active: boolean;
 }
+
+export interface IResponseError {
+  statusCode: number;
+  statusMessage: string;
+}

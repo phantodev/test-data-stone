@@ -8,7 +8,7 @@ const { width } = useWindowSize(); // Pegar a largura da tela para mostrar o men
 
 <template>
   <Transition>
-    <section class="overlay-modal" v-if="customerStore.showDeleModal">
+    <section class="overlay-modal" v-if="customerStore.showDeleteModal">
       <ModalDelete />
     </section>
   </Transition>

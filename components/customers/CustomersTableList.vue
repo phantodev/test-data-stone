@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { useCustomerStore } from "../../stores/CustomerStore";
+import type { ICustomers } from "~/types/Customers";
 
 const customerStore = useCustomerStore();
 
@@ -10,6 +11,11 @@ const sortedCustomers = computed(() => {
     return customerStore.customers.sort((a, b) => b.id - a.id);
   }
 });
+
+function handleDeleteCustomer(customer: ICustomers) {
+  customerStore.showDeleteModal = true;
+  customerStore.customerToDeleteOrUpdate = customer;
+}
 </script>
 
 <template>
@@ -43,7 +49,7 @@ const sortedCustomers = computed(() => {
                 src="../../assets/images/edit.svg"
                 alt="Icone de Edição de Clientes" />
             </button>
-            <button>
+            <button @click="handleDeleteCustomer(customer)">
               <img
                 src="../../assets/images/bin.svg"
                 alt="Icone de Exclusão de Clientes" />
@@ -84,6 +90,7 @@ td {
     display: flex;
     align-items: center;
     background-color: transparent;
+    cursor: pointer;
     border: none;
     img {
       width: 1.2rem;
@@ -119,13 +126,13 @@ th {
 
 .badge-inactive {
   @extend .badge;
-  background-color: #aa0000;
+  background-color: #ef4444;
   color: rgb(255, 220, 220);
 }
 
 .badge-active {
   @extend .badge;
   color: rgb(214, 255, 214);
-  background-color: #00c500;
+  background-color: #22c55e;
 }
 </style>
