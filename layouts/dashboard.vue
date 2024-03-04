@@ -1,9 +1,17 @@
 <script setup lang="ts">
 import { useWindowSize } from "@vueuse/core";
+import { useCustomerStore } from "../stores/CustomerStore";
+
+const customerStore = useCustomerStore();
 const { width } = useWindowSize(); // Pegar a largura da tela para mostrar o menu DESKTOP ou MOBILE, pois eles tem layouts diferentes.
 </script>
 
 <template>
+  <Transition>
+    <section class="overlay-modal" v-if="customerStore.showDeleModal">
+      <ModalDelete />
+    </section>
+  </Transition>
   <section>
     <header class="header">
       <img src="../assets/images/logo-data-stone.png" alt="Logo Data Stone" />
@@ -17,6 +25,16 @@ const { width } = useWindowSize(); // Pegar a largura da tela para mostrar o men
 </template>
 
 <style lang="scss">
+.overlay-modal {
+  position: fixed;
+  z-index: 999;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .header {
   background-color: $white;
   height: 6rem;
@@ -38,5 +56,15 @@ const { width } = useWindowSize(); // Pegar a largura da tela para mostrar o men
   padding-right: 1rem;
   padding-top: 7rem;
   padding-bottom: 3rem;
+}
+
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
 }
 </style>

@@ -123,7 +123,6 @@ function handleLogout() {
   }
 }
 
-/* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease;
