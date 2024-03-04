@@ -18,7 +18,10 @@ const { width } = useWindowSize(); // Pegar a largura da tela para mostrar o men
   </Transition>
   <section>
     <header class="header">
-      <img src="../assets/images/logo-data-stone.png" alt="Logo Data Stone" />
+      <img
+        src="../assets/images/logo-data-stone.png"
+        width="240"
+        alt="Logo Data Stone" />
       <NavbarDesktop v-if="width > 834" />
       <NavbarMobile v-else />
     </header>

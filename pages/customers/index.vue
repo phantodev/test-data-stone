@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import { useToast } from "vue-toastification";
+import { useWindowSize } from "@vueuse/core";
 import { useCustomerStore } from "../../stores/CustomerStore";
 import { useProductStore } from "../../stores/ProductStore";
 import type { IGetAllCustomersResponse } from "../../types/Customers";
 
+const { width } = useWindowSize(); // Pegar a largura da tela para manipular a posição dos botões de Adicionar Cliente e Titulo
 const customerStore = useCustomerStore();
 const productStore = useProductStore();
 const toast = useToast();
@@ -34,7 +36,9 @@ productStore.$reset();
 <template>
   <NuxtLayout name="dashboard">
     <section class="container-customers">
-      <section class="header-customers">
+      <section
+        class="header-customers"
+        :class="width < 420 ? 'change-flex-direction' : ''">
         <TitlePage icons="../assets/images/customers.svg">
           {{
             currentAction === "list" ? "Lista de Clientes" : "Adicionar Cliente"
@@ -71,6 +75,10 @@ productStore.$reset();
   display: flex;
   justify-content: space-between;
 }
+.change-flex-direction {
+  flex-direction: column;
+  row-gap: 1rem;
+}
 .content-customers {
   margin-top: 2rem;
 }
@@ -81,5 +89,6 @@ productStore.$reset();
   background-color: $white;
   border-radius: 1rem;
   box-shadow: 15px 15px 100px 15px rgba(0, 0, 0, 0.2);
+  overflow-x: auto; /* Adiciona barra de rolagem horizontal quando necessário */
 }
 </style>

@@ -92,7 +92,7 @@ function handleUpdateCustomer(customer: ICustomers) {
   overflow-x: auto; /* Adiciona barra de rolagem horizontal quando necessário */
 }
 table {
-  width: 100%;
+  width: 1220px;
   border-collapse: collapse;
 }
 th,

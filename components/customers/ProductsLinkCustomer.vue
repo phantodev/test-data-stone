@@ -1,47 +1,55 @@
-<template>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Produto</th>
-        <th>Vincular Produto</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>1</td>
-        <td>Stone Lab</td>
-        <td>
-          <section class="container-radios">
-            <label>
-              <input type="radio" name="stoneLab" value="ativo" />
-              Sim
-            </label>
-            <br />
+<script setup lang="ts">
+import { computed } from "vue";
+import { useProductStore } from "../../stores/ProductStore";
 
-            <label>
-              <input type="radio" name="stoneLab" value="inativo" />
-              Não
-            </label>
-          </section>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-  <section class="container-pagination">
-    <section class="registers-numbers">
-      Mostrando de <strong>1</strong> a <strong>10</strong> de um total de
-      <strong>20 registros</strong>
-    </section>
-    <section class="pagination-numbers">
-      <TablePagination />
-    </section>
+const productStore = useProductStore();
+
+// Método computado para ordenar os clientes por ID de forma decrescente
+const sortedProducts = computed(() => {
+  if (productStore.products !== null) {
+    return productStore.products.sort((a, b) => b.id - a.id);
+  }
+});
+</script>
+
+<template>
+  <section class="container-table">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nome</th>
+          <th>Vincular Produto</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(product, index) in sortedProducts" :key="index">
+          <td>{{ product.id }}</td>
+          <td>{{ product.name }}</td>
+          <td>
+            <section class="container-radios">
+              <label>
+                <input type="radio" :name="product.name" value="ativo" />
+                Sim
+              </label>
+              <br />
+
+              <label>
+                <input type="radio" :name="product.name" value="inativo" />
+                Não
+              </label>
+            </section>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </section>
 </template>
 
-<script lang="ts" setup></script>
-
 <style lang="scss" scoped>
+.container-table {
+  overflow-x: auto; /* Adiciona barra de rolagem horizontal quando necessário */
+}
 table {
   width: 100%;
   border-collapse: collapse;
@@ -58,6 +66,7 @@ td {
     display: flex;
     align-items: center;
     background-color: transparent;
+    cursor: pointer;
     border: none;
     img {
       width: 1.2rem;
@@ -67,39 +76,5 @@ td {
 }
 th {
   background-color: #f2f2f2;
-}
-
-.row-btn-edit-bin {
-  display: flex;
-  align-items: center;
-  column-gap: 1rem;
-}
-
-.container-pagination {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 2rem;
-}
-
-.badge {
-  padding-left: 1rem;
-  padding-right: 1rem;
-  padding-top: 0.3rem;
-  padding-bottom: 0.3rem;
-  border-radius: 2rem;
-  font-weight: bold;
-  font-size: 0.7rem;
-}
-
-.badge-inactive {
-  @extend .badge;
-  background-color: #aa0000;
-  color: rgb(255, 220, 220);
-}
-
-.badge-active {
-  @extend .badge;
-  color: rgb(214, 255, 214);
-  background-color: #00c500;
 }
 </style>
