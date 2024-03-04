@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@0,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap");
 
 $background: #1971c2;
 $primary: #055b9b;
@@ -206,32 +206,5 @@ li {
     width: 20px;
     height: 20px;
     margin-right: 0.5rem;
-  }
-  input[type="radio"]:after {
-    width: 20px;
-    height: 20px;
-    border-radius: 20px;
-    top: -2px;
-    left: -1px;
-    position: relative;
-    background-color: #d1d3d1;
-    content: "";
-    display: inline-block;
-    visibility: visible;
-    border: 2px solid white;
-  }
-
-  input[type="radio"]:checked:after {
-    width: 20px;
-    height: 20px;
-    border-radius: 20px;
-    top: -2px;
-    left: -1px;
-    position: relative;
-    background-color: $primary;
-    content: "";
-    display: inline-block;
-    visibility: visible;
-    border: 2px solid white;
   }
 }

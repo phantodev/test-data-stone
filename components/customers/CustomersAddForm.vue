@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { onMounted } from "vue";
 import type { ICustomers } from "~/types/Customers";
 import { useCustomerStore } from "../../stores/CustomerStore";
 import { useToast } from "vue-toastification";
@@ -12,7 +13,8 @@ const newCustomer = ref<ICustomers>({
   document: "",
   email: "",
   phone: "",
-  active: false,
+  useProducts: [],
+  active: true,
 });
 // Essa é uma função que iremos fazer uma simulação para adicionar um cliente.
 // Neste caso iremos adicionar um novo item no array nos dados armazenado ao PINIA.
@@ -27,6 +29,7 @@ async function addNewCustomer(): Promise<void> {
       document: newCustomer.value.document,
       email: newCustomer.value.email,
       phone: newCustomer.value.phone,
+      useProducts: [],
       active: newCustomer.value.active,
     });
     toast.success("Usuário adicionado com sucesso!");
@@ -36,7 +39,8 @@ async function addNewCustomer(): Promise<void> {
       document: "",
       email: "",
       phone: "",
-      active: false,
+      useProducts: [],
+      active: true,
     };
   } catch (error) {
     toast.error("Não foi possível adicionar um usuário!");
@@ -44,6 +48,18 @@ async function addNewCustomer(): Promise<void> {
     isLoading.value = false;
   }
 }
+
+onMounted(() => {
+  if (customerStore.customerToDeleteOrUpdate !== null) {
+    newCustomer.value.id = customerStore.customerToDeleteOrUpdate.id;
+    newCustomer.value.name = customerStore.customerToDeleteOrUpdate.name;
+    newCustomer.value.document =
+      customerStore.customerToDeleteOrUpdate.document;
+    newCustomer.value.email = customerStore.customerToDeleteOrUpdate.email;
+    newCustomer.value.phone = customerStore.customerToDeleteOrUpdate.phone;
+    newCustomer.value.active = customerStore.customerToDeleteOrUpdate.active;
+  }
+});
 </script>
 
 <template>
@@ -57,6 +73,7 @@ async function addNewCustomer(): Promise<void> {
             type="text"
             id="name"
             name="name"
+            autocomplete="on"
             v-model="newCustomer.name"
             placeholder="Digite o nome do cliente" />
         </section>
@@ -67,6 +84,7 @@ async function addNewCustomer(): Promise<void> {
             type="text"
             id="document"
             name="document"
+            autocomplete="on"
             v-model="newCustomer.document"
             v-maska
             data-maska="###.###.###-##"
@@ -78,6 +96,7 @@ async function addNewCustomer(): Promise<void> {
             class="input-text"
             type="email"
             id="email"
+            autocomplete="on"
             v-model="newCustomer.email"
             placeholder="Digite o e-mail do cliente"
             name="email" />
@@ -88,6 +107,7 @@ async function addNewCustomer(): Promise<void> {
             class="input-text"
             type="tel"
             id="phone"
+            autocomplete="on"
             v-model="newCustomer.phone"
             v-maska
             data-maska="(##) #####-####"
@@ -102,7 +122,8 @@ async function addNewCustomer(): Promise<void> {
                 type="radio"
                 name="userStatus"
                 value="ativo"
-                v-model="newCustomer.active" />
+                :checked="newCustomer.active === true"
+                @change="newCustomer.active = true" />
               Sim
             </label>
             <br />
@@ -112,7 +133,8 @@ async function addNewCustomer(): Promise<void> {
                 type="radio"
                 name="userStatus"
                 value="inativo"
-                v-model="newCustomer.active" />
+                :checked="newCustomer.active === false"
+                @change="newCustomer.active = false" />
               Não
             </label>
           </section>

@@ -10,7 +10,21 @@ export default defineEventHandler(async (event) => {
         name: "John Smith",
         document: "123456789",
         email: "john@example.com",
-        phone: "555-1234",
+        phone: "(41) 95553-4566",
+        useProducts: [
+          {
+            id: 1,
+            name: "Web Development",
+          },
+          {
+            id: 3,
+            name: "Data Stone Lab",
+          },
+          {
+            id: 4,
+            name: "Data Stone Mail",
+          },
+        ],
         active: true,
       },
       {
@@ -18,7 +32,21 @@ export default defineEventHandler(async (event) => {
         name: "Alice Johnson",
         document: "987654321",
         email: "alice@example.com",
-        phone: "555-5678",
+        phone: "(41) 95553-4555",
+        useProducts: [
+          {
+            id: 1,
+            name: "Web Development",
+          },
+          {
+            id: 3,
+            name: "Data Stone Lab",
+          },
+          {
+            id: 4,
+            name: "Data Stone Mail",
+          },
+        ],
         active: false,
       },
       {
@@ -26,7 +54,21 @@ export default defineEventHandler(async (event) => {
         name: "Michael Brown",
         document: "456789123",
         email: "michael@example.com",
-        phone: "555-9012",
+        phone: "(41) 95553-6889",
+        useProducts: [
+          {
+            id: 1,
+            name: "Web Development",
+          },
+          {
+            id: 3,
+            name: "Data Stone Lab",
+          },
+          {
+            id: 4,
+            name: "Data Stone Mail",
+          },
+        ],
         active: true,
       },
       {
@@ -34,7 +76,21 @@ export default defineEventHandler(async (event) => {
         name: "Emily Davis",
         document: "321654987",
         email: "emily@example.com",
-        phone: "555-3456",
+        phone: "(41) 95553-7356",
+        useProducts: [
+          {
+            id: 1,
+            name: "Web Development",
+          },
+          {
+            id: 3,
+            name: "Data Stone Lab",
+          },
+          {
+            id: 4,
+            name: "Data Stone Mail",
+          },
+        ],
         active: true,
       },
       {
@@ -42,7 +98,17 @@ export default defineEventHandler(async (event) => {
         name: "William Wilson",
         document: "789123456",
         email: "william@example.com",
-        phone: "555-7890",
+        phone: "(41) 95553-2424",
+        useProducts: [
+          {
+            id: 1,
+            name: "Web Development",
+          },
+          {
+            id: 3,
+            name: "Data Stone Lab",
+          },
+        ],
         active: false,
       },
       {
@@ -50,7 +116,17 @@ export default defineEventHandler(async (event) => {
         name: "Sophia Martinez",
         document: "654987321",
         email: "sophia@example.com",
-        phone: "555-2345",
+        phone: "(41) 95553-5656",
+        useProducts: [
+          {
+            id: 1,
+            name: "Web Development",
+          },
+          {
+            id: 3,
+            name: "Data Stone Lab",
+          },
+        ],
         active: true,
       },
       {
@@ -58,7 +134,13 @@ export default defineEventHandler(async (event) => {
         name: "James Taylor",
         document: "147258369",
         email: "james@example.com",
-        phone: "555-6789",
+        phone: "(41) 95553-6767",
+        useProducts: [
+          {
+            id: 4,
+            name: "Data Stone Mail",
+          },
+        ],
         active: true,
       },
       {
@@ -66,7 +148,17 @@ export default defineEventHandler(async (event) => {
         name: "Olivia Clark",
         document: "852369741",
         email: "olivia@example.com",
-        phone: "555-0123",
+        phone: "(41) 95553-8899",
+        useProducts: [
+          {
+            id: 1,
+            name: "Web Development",
+          },
+          {
+            id: 3,
+            name: "Data Stone Lab",
+          },
+        ],
         active: false,
       },
       {
@@ -74,7 +166,21 @@ export default defineEventHandler(async (event) => {
         name: "Daniel Rodriguez",
         document: "369852147",
         email: "daniel@example.com",
-        phone: "555-4567",
+        phone: "(41) 95553-5757",
+        useProducts: [
+          {
+            id: 1,
+            name: "Web Development",
+          },
+          {
+            id: 3,
+            name: "Data Stone Lab",
+          },
+          {
+            id: 4,
+            name: "Data Stone Mail",
+          },
+        ],
         active: true,
       },
       {
@@ -82,7 +188,13 @@ export default defineEventHandler(async (event) => {
         name: "Ava Lewis",
         document: "258147369",
         email: "ava@example.com",
-        phone: "555-8901",
+        phone: "(41) 95553-5789",
+        useProducts: [
+          {
+            id: 1,
+            name: "Web Development",
+          },
+        ],
         active: true,
       },
     ],

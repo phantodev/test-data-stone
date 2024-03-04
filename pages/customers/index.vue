@@ -53,7 +53,9 @@ getAllCustomers();
         </button>
       </section>
       <section class="content-customers">
-        <CustomersTableList v-if="currentAction === 'list'" />
+        <CustomersTableList
+          :changeAction="changeAction"
+          v-if="currentAction === 'list'" />
         <CustomersAddForm v-else />
       </section>
     </section>

@@ -1,3 +1,5 @@
+import type { IProducts } from "./Products";
+
 export interface IGetAllCustomersResponse {
   customers: ICustomers[];
 }
@@ -8,6 +10,7 @@ export interface ICustomers {
   document: string;
   email: string;
   phone: string;
+  useProducts: IProducts[];
   active: boolean;
 }
 

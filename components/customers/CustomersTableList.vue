@@ -3,6 +3,12 @@ import { computed } from "vue";
 import { useCustomerStore } from "../../stores/CustomerStore";
 import type { ICustomers } from "~/types/Customers";
 
+const props = defineProps({
+  changeAction: {
+    type: Function,
+  },
+});
+
 const customerStore = useCustomerStore();
 
 // Método computado para ordenar os clientes por ID de forma decrescente
@@ -14,6 +20,13 @@ const sortedCustomers = computed(() => {
 
 function handleDeleteCustomer(customer: ICustomers) {
   customerStore.showDeleteModal = true;
+  customerStore.customerToDeleteOrUpdate = customer;
+}
+
+function handleUpdateCustomer(customer: ICustomers) {
+  if (props.changeAction) {
+    props.changeAction("edit");
+  }
   customerStore.customerToDeleteOrUpdate = customer;
 }
 </script>
@@ -28,6 +41,7 @@ function handleDeleteCustomer(customer: ICustomers) {
           <th>Documento</th>
           <th>Email</th>
           <th>Telefone</th>
+          <th>Produto em Uso</th>
           <th>Ativo</th>
           <th>Ações</th>
         </tr>
@@ -39,12 +53,15 @@ function handleDeleteCustomer(customer: ICustomers) {
           <td>{{ customer.document }}</td>
           <td>{{ customer.email }}</td>
           <td>{{ customer.phone }}</td>
+          <td>{{ customer.useProducts.length }} produtos</td>
           <td>
             <span class="badge-active" v-if="customer.active">Sim</span
             ><span class="badge-inactive" v-else>Não</span>
           </td>
           <td class="row-btn-edit-bin">
-            <button class="btn-edit-bin">
+            <button
+              class="btn-edit-bin"
+              @click="handleUpdateCustomer(customer)">
               <img
                 src="../../assets/images/edit.svg"
                 alt="Icone de Edição de Clientes" />
