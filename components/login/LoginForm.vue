@@ -13,7 +13,7 @@ const isLoading = ref<boolean>(false);
 //processo de login. Aqui está um resumo do que ele faz: Acessa minha rota de Login feita no próprio nuxt.
 // O retorno da rota caso sucesso armazena as informações em um estato do PINIA que é persistido no Localstorage
 // Caso o retorno disparar o erro de não autorizado, um toast é disparado com a mensagem de erro.
-async function handleLogin() {
+async function handleLogin(): Promise<void> {
   isLoading.value = true;
   const { data: responseData, error } = await useFetch<ILoginResponse>(
     "/api/login",
@@ -54,13 +54,17 @@ async function handleLogin() {
   <section class="container-input-checkbox">
     <label class="container-check">
       <section class="label-check">Lembrar-me</section>
-      <input type="checkbox" checked="checked" />
+      <input type="checkbox" checked />
       <span class="checkmark"></span>
     </label>
     <button class="btn-secondary">Esqueci Minha Senha</button>
   </section>
 
-  <button @click="handleLogin()" class="btn-primary" type="button">
+  <button
+    :disabled="isLoading"
+    @click="handleLogin()"
+    class="btn-primary"
+    type="button">
     <span v-if="!isLoading"> Entrar </span>
     <span v-else>
       <img src="../../assets/images/spinner.svg" width="24" alt=""

@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import { computed } from "vue";
 import { useCustomerStore } from "../../stores/CustomerStore";
-import type { ICustomers } from "../../types/Customers";
 
 const customerStore = useCustomerStore();
+
+// Método computado para ordenar os clientes por ID de forma decrescente
+const sortedCustomers = computed(() => {
+  if (customerStore.customers !== null) {
+    return customerStore.customers.sort((a, b) => b.id - a.id);
+  }
+});
 </script>
 
 <template>
@@ -20,7 +27,7 @@ const customerStore = useCustomerStore();
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(customer, index) in customerStore.customers" :key="index">
+        <tr v-for="(customer, index) in sortedCustomers" :key="index">
           <td>{{ customer.id }}</td>
           <td>{{ customer.name }}</td>
           <td>{{ customer.document }}</td>
