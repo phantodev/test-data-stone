@@ -43,7 +43,27 @@ async function addNewCustomer(): Promise<void> {
       active: true,
     };
   } catch (error) {
-    toast.error("Não foi possível adicionar um usuário!");
+    toast.error("Não foi possível adicionar um cliente!");
+  } finally {
+    isLoading.value = false;
+  }
+}
+
+async function updateCustomer(): Promise<void> {
+  try {
+    isLoading.value = true;
+    await customerStore.updateCustomer({
+      id: newCustomer.value.id,
+      name: newCustomer.value.name,
+      document: newCustomer.value.document,
+      email: newCustomer.value.email,
+      phone: newCustomer.value.phone,
+      useProducts: [],
+      active: newCustomer.value.active,
+    });
+    toast.success("Usuário atualizado com sucesso!");
+  } catch (error) {
+    toast.error("Não foi possível atualizar o cliente!");
   } finally {
     isLoading.value = false;
   }
@@ -64,7 +84,12 @@ onMounted(() => {
 
 <template>
   <section>
-    <form @submit.prevent="addNewCustomer">
+    <form
+      @submit.prevent="
+        customerStore.customerToDeleteOrUpdate === null
+          ? addNewCustomer()
+          : updateCustomer()
+      ">
       <section class="grid-container">
         <section class="container-input">
           <label class="label-input" for="name">Nome:</label>
@@ -154,7 +179,18 @@ onMounted(() => {
           <Icon
             name="fluent:add-12-filled"
             size="1rem"
-            color="fluent:add-12-filled" />Salvar Cliente
+            color="fluent:add-12-filled"
+            v-if="customerStore.customerToDeleteOrUpdate === null" />
+          <Icon
+            name="material-symbols-light:save"
+            size="1.3rem"
+            color="fluent:add-12-filled"
+            v-else />
+          {{
+            customerStore.customerToDeleteOrUpdate !== null
+              ? "Atualizar Cliente"
+              : "Salvar Cliente"
+          }}
         </span>
         <span v-else>
           <img src="../../assets/images/spinner.svg" width="24" alt=""

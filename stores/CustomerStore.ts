@@ -22,6 +22,26 @@ export const useCustomerStore = defineStore("customerStore", () => {
       customers.value.push(newCustomer); // Adiciona o novo cliente ao array
     }
   }
+
+  async function updateCustomer(updatedCustomer: ICustomers): Promise<void> {
+    // Simulando apenas uma lentidão na chamada com essa Promise.
+    await new Promise((resolve) => {
+      setTimeout(resolve, 2000);
+    });
+    // Verifica se a lista de clientes não é nula
+    if (customers.value !== null) {
+      // Encontra o índice do cliente na lista com base no ID
+      const index = customers.value.findIndex(
+        (customer) => customer.id === updatedCustomer.id
+      );
+      // Se o cliente com o ID fornecido existir na lista
+      if (index !== -1) {
+        // Atualiza o cliente na lista com os novos dados
+        customers.value[index] = updatedCustomer;
+      }
+    }
+  }
+
   /**
    * A função `removeCustomer` remove de forma assíncrona um cliente de uma lista
    * após um atraso simulado.
@@ -58,6 +78,7 @@ export const useCustomerStore = defineStore("customerStore", () => {
     customerToDeleteOrUpdate,
     customers,
     addNewCustomer,
+    updateCustomer,
     removeCustomer,
   };
 });
