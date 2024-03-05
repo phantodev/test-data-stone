@@ -38,38 +38,50 @@ async function handleLogin(): Promise<void> {
 </script>
 
 <template>
-  <section class="container-input">
-    <label class="label-input" for="email">E-mail</label>
-    <input class="input-text" type="text" name="" id="email" v-model="email" />
-  </section>
-  <section class="container-input">
-    <label class="label-input" for="password">Senha</label>
-    <input
-      class="input-text"
-      type="text"
-      name=""
-      id="password"
-      v-model="password" />
-  </section>
-  <section class="container-input-checkbox">
-    <label class="container-check">
-      <section class="label-check">Lembrar-me</section>
-      <input type="checkbox" checked />
-      <span class="checkmark"></span>
-    </label>
-    <button class="btn-secondary">Esqueci Minha Senha</button>
-  </section>
+  <form
+    @submit.prevent="handleLogin()"
+    class="p-4 w-full lg:w-1/2"
+    data-test="form-login">
+    <section class="container-input">
+      <label class="label-input" for="email">E-mail</label>
+      <input
+        data-test="input-email"
+        class="input-text"
+        type="text"
+        name=""
+        id="email"
+        v-model="email" />
+    </section>
+    <section class="container-input">
+      <label class="label-input" for="password">Senha</label>
+      <input
+        class="input-text"
+        type="text"
+        name=""
+        data-test="input-password"
+        id="password"
+        v-model="password" />
+    </section>
+    <section class="container-input-checkbox">
+      <label class="container-check">
+        <section class="label-check">Lembrar-me</section>
+        <input type="checkbox" checked />
+        <span class="checkmark"></span>
+      </label>
+      <button class="btn-secondary">Esqueci Minha Senha</button>
+    </section>
 
-  <button
-    :disabled="isLoading"
-    @click="handleLogin()"
-    class="btn-primary"
-    type="button">
-    <span v-if="!isLoading"> Entrar </span>
-    <span v-else>
-      <img src="../../assets/images/spinner.svg" width="24" alt=""
-    /></span>
-  </button>
+    <button
+      :disabled="isLoading"
+      class="btn-primary"
+      type="submit"
+      data-test="link-signin">
+      <span v-if="!isLoading"> Entrar </span>
+      <span v-else>
+        <img src="../../assets/images/spinner.svg" width="24" alt=""
+      /></span>
+    </button>
+  </form>
 </template>
 
 <script lang="ts"></script>
