@@ -72,18 +72,26 @@ async function updateCustomer(): Promise<void> {
 
 // A função `handleAddUseProducts` é responsável por adicionar um produto selecionado
 // para o array `useProducts` do objeto `newCustomer`.
-function handleAddUseProducts(product: IProducts) {
+function handleAddUseProducts(product: IProducts): void {
   newCustomer.value.useProducts.push(product);
 }
 
 // A função `handleAddUseProducts` é responsável por adicionar um produto selecionado
 // para o array `useProducts` do objeto `newCustomer`.
-function handleRemoveUseProducts(product: IProducts) {
-  console.log("Fazer a lógica para remover");
+function handleRemoveUseProducts(product: IProducts): void {
+  // Encontrar o índice do produto a ser removido dentro do array useProducts
+  const index = newCustomer.value.useProducts.findIndex(
+    (p) => p.id === product.id
+  );
+
+  // Se o produto existir no array, remova-o
+  if (index !== -1) {
+    newCustomer.value.useProducts.splice(index, 1);
+  }
 }
 
 // Esta função é para caso o estado do pinia para atualizar um cliente seja diferente de null
-// atualiza a ref local para os campos vir preenchidos com os dados.
+// então atualiza a ref local para os inputs estarem preenchidos com os dados.
 onMounted(() => {
   if (customerStore.customerToDeleteOrUpdate !== null) {
     newCustomer.value.id = customerStore.customerToDeleteOrUpdate.id;
