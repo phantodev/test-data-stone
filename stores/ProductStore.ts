@@ -1,10 +1,24 @@
 import { defineStore } from "pinia";
-import type { IProducts } from "~/types/Products";
+import type { IGetAllProductsResponse, IProducts } from "~/types/Products";
 
 export const useProductStore = defineStore("productStore", () => {
   const showDeleteModal = ref<boolean>(false);
   const productToDeleteOrUpdate = ref<IProducts | null>(null);
   const products = ref<IProducts[] | null>(null);
+
+  async function getAllProducts() {
+    const { data: responseData, error } =
+      await useFetch<IGetAllProductsResponse>("/api/products");
+    if (responseData.value !== null) {
+      products.value = responseData.value.products;
+    }
+    if (error.value !== null) {
+      throw createError({
+        statusCode: 400,
+        statusMessage: "Banco fora do AR. Chame o suporte!",
+      });
+    }
+  }
 
   /**
    * A função `addNewCustomer` adiciona de forma assíncrona um novo cliente a um array
@@ -19,7 +33,6 @@ export const useProductStore = defineStore("productStore", () => {
       setTimeout(resolve, 2000);
     });
     if (products.value !== null) {
-      console.log("ENTROU 2");
       products.value.push(newProduct); // Adiciona o novo cliente ao array
     }
   }
@@ -68,7 +81,7 @@ export const useProductStore = defineStore("productStore", () => {
       } catch (error) {
         throw createError({
           statusCode: 409,
-          statusMessage: "Não foi possível deletar produto!",
+          statusMessage: "Não foi acessar banco de dados!",
         });
       }
     }
@@ -83,6 +96,7 @@ export const useProductStore = defineStore("productStore", () => {
     showDeleteModal,
     productToDeleteOrUpdate,
     products,
+    getAllProducts,
     addNewProduct,
     updateProduct,
     removeProduct,

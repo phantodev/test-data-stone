@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { useWindowSize } from "@vueuse/core";
 import { useProductStore } from "../../stores/ProductStore";
 import type { IProducts } from "~/types/Products";
 
@@ -9,6 +10,7 @@ const props = defineProps({
   },
 });
 
+const { width } = useWindowSize(); // Pegar a largura da tela para manipular a posição dos objetos de paginação
 const productStore = useProductStore();
 
 // Método computado para ordenar os clientes por ID de forma decrescente
@@ -68,7 +70,9 @@ function handleUpdateProduct(product: IProducts) {
       </tbody>
     </table>
   </section>
-  <section class="container-pagination">
+  <section
+    class="container-pagination"
+    :class="width < 420 ? 'change-flex-direction' : ''">
     <section class="registers-numbers">
       Mostrando de <strong>1</strong> a <strong>10</strong> de um total de
       <strong>20 registros</strong>
@@ -84,7 +88,7 @@ function handleUpdateProduct(product: IProducts) {
   overflow-x: auto; /* Adiciona barra de rolagem horizontal quando necessário */
 }
 table {
-  width: 100%;
+  width: 1220px;
   border-collapse: collapse;
 }
 th,

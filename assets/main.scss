@@ -30,6 +30,11 @@ li {
   margin: 0;
 }
 
+.change-flex-direction {
+  flex-direction: column;
+  row-gap: 1rem;
+}
+
 .btn-base {
   background-color: $primary;
   height: 2.5rem;

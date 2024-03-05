@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { useToast } from "vue-toastification";
 import { useProductStore } from "../../stores/ProductStore";
+import type { IResponseError } from "~/types/Customers";
 
 const productStore = useProductStore();
+const isLoading = ref<boolean>(false);
+const toast = useToast();
 
 // Método computado para ordenar os clientes por ID de forma decrescente
 const sortedProducts = computed(() => {
@@ -10,6 +14,24 @@ const sortedProducts = computed(() => {
     return productStore.products.sort((a, b) => b.id - a.id);
   }
 });
+
+async function handleGetAllProducts() {
+  try {
+    isLoading.value = true;
+    await productStore.getAllProducts();
+  } catch (error) {
+    toast.error((error as IResponseError).statusMessage);
+  } finally {
+    isLoading.value = false;
+  }
+}
+// Chama a função toda vez que o componente é renderizado
+// ATENÇÃO: Este IF é apenas para fazer uma SIMULAÇÃO PARA ESTE TESTE, pois
+// no cadastro de produtos fazemos a manipulação de um novo produto no array
+// e para evitar que esta chamada pegue as mesmas informações iniciais da API.
+if (productStore.products === null) {
+  handleGetAllProducts();
+}
 </script>
 
 <template>

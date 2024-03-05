@@ -1,10 +1,24 @@
 import { defineStore } from "pinia";
-import type { ICustomers } from "~/types/Customers";
+import type { ICustomers, IGetAllCustomersResponse } from "~/types/Customers";
 
 export const useCustomerStore = defineStore("customerStore", () => {
   const showDeleteModal = ref<boolean>(false);
   const customerToDeleteOrUpdate = ref<ICustomers | null>(null);
   const customers = ref<ICustomers[] | null>(null);
+
+  async function getAllCustomers() {
+    const { data: responseData, error } =
+      await useFetch<IGetAllCustomersResponse>("/api/customers");
+    if (responseData.value !== null) {
+      customers.value = responseData.value.customers;
+    }
+    if (error.value !== null) {
+      throw createError({
+        statusCode: 409,
+        statusMessage: "Não foi acessar banco de dados!",
+      });
+    }
+  }
 
   /**
    * A função `addNewCustomer` adiciona de forma assíncrona um novo cliente a um array
@@ -82,6 +96,7 @@ export const useCustomerStore = defineStore("customerStore", () => {
     showDeleteModal,
     customerToDeleteOrUpdate,
     customers,
+    getAllCustomers,
     addNewCustomer,
     updateCustomer,
     removeCustomer,

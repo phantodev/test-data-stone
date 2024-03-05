@@ -3,7 +3,10 @@ import { useToast } from "vue-toastification";
 import { useWindowSize } from "@vueuse/core";
 import { useCustomerStore } from "../../stores/CustomerStore";
 import { useProductStore } from "../../stores/ProductStore";
-import type { IGetAllCustomersResponse } from "../../types/Customers";
+import type {
+  IGetAllCustomersResponse,
+  IResponseError,
+} from "../../types/Customers";
 
 const { width } = useWindowSize(); // Pegar a largura da tela para manipular a posição dos botões de Adicionar Cliente e Titulo
 const customerStore = useCustomerStore();
@@ -16,19 +19,23 @@ function changeAction(action: string): void {
   currentAction.value = action;
 }
 
-async function getAllCustomers() {
-  isLoading.value = true;
-  const { data: responseData, error } =
-    await useFetch<IGetAllCustomersResponse>("/api/customers");
-  if (responseData.value !== null) {
-    customerStore.customers = responseData.value.customers;
-  }
-  if (error.value !== null) {
+async function handleGetAllCustomers() {
+  try {
+    isLoading.value = true;
+    await customerStore.getAllCustomers();
+  } catch (error) {
+    toast.error((error as IResponseError).statusMessage);
+  } finally {
     isLoading.value = false;
-    toast.error("Banco fora do AR. Chame o suporte!");
   }
 }
-getAllCustomers();
+// Chama a função toda vez que o componente é renderizado
+// ATENÇÃO: Este IF é apenas para fazer uma SIMULAÇÃO PARA ESTE TESTE, pois
+// no cadastro de customers fazemos a manipulação de um novo cliente no array
+// e para evitar que esta chamada pegue as mesmas informações iniciais da API.
+if (customerStore.customers === null) {
+  handleGetAllCustomers();
+}
 // Resetando o estado do PINIA de products
 productStore.$reset();
 </script>
@@ -74,10 +81,6 @@ productStore.$reset();
 .header-customers {
   display: flex;
   justify-content: space-between;
-}
-.change-flex-direction {
-  flex-direction: column;
-  row-gap: 1rem;
 }
 .content-customers {
   margin-top: 2rem;

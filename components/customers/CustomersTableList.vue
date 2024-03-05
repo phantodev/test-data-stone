@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import { useWindowSize } from "@vueuse/core";
 import { useCustomerStore } from "../../stores/CustomerStore";
 import type { ICustomers } from "~/types/Customers";
 
@@ -9,6 +10,7 @@ const props = defineProps({
   },
 });
 
+const { width } = useWindowSize(); // Pegar a largura da tela para manipular a posição dos objetos de paginação
 const customerStore = useCustomerStore();
 
 // Método computado para ordenar os clientes por ID de forma decrescente
@@ -75,7 +77,9 @@ function handleUpdateCustomer(customer: ICustomers) {
         </tr>
       </tbody>
     </table>
-    <section class="container-pagination">
+    <section
+      class="container-pagination"
+      :class="width < 420 ? 'change-flex-direction' : ''">
       <section class="registers-numbers">
         Mostrando de <strong>1</strong> a <strong>10</strong> de um total de
         <strong>20 registros</strong>
