@@ -3,7 +3,7 @@
 1 - Porque NUXT? A decisão é simples: Com este framework podemos desenvolver tanto aplicações SPA como aplicações SSR. Dependerá de cada projeto e cada empresa.
 Além disso devo citar que sou um profissional certificado da empresa masterinnuxt.com e estou na metade da certificação do masteringpinia.com
 2 - Esta aplicações existem WORKAROUNDS criados apenas para simulação para estes teste da empresa em específico. Eles não seriam utilizados em um cenário real.
-Os workarounds usados foram comentados no código no momento necessário.
+Os workarounds usados foram comentados no código no momento necessário. Alguns itens ficaram a ser desenvolvidos como sistema de páginação nas tabelas.
 3 - CSS principal e css escopado: Pela minha experiência a utilizaram de CSS para o escopo de cada componente se torna mais rápido o acesso as classes CSS e mais
 organizadas. Uso um arquivo main.scss para classes mais gerais que são acessadas por todos os componentes.
 4 - PINIA para gerenciamento de estado GLOBAL. Gosto de armazenar as informações mais GLOBAIS em uma STORE do PINIA.
@@ -13,8 +13,9 @@ onde pela minha experiência é onde as aplicações quebram com mais frequênci
 o time de front-end. Os testes desenvolvidos foram bem simples, apenas para validação do meu conhecimento.
 6 - Foi desenvolvido simples SERVER APIs para servir os dados iniciais para aplicação. Após dados recuperados pela primeira vez,
 todo os dados são gerenciados pelo PINIA.
-7 - Este APP foi compartilhado públicamente via GITHUB em https://github.com/phantodev/test-data-stone
-8 - Este APP foi feito um deploy na plataforma render.com no endereço: https://test-data-stone.onrender.com/
+7 - Este aplicativo é um PWA (Progressive Web Application). Se você entrar no LINK hospedado abaixo você notará que é possivel instalar o APP em seu mobile ou desktop.
+8 - Este APP foi compartilhado públicamente via GITHUB em https://github.com/phantodev/test-data-stone
+9 - Este APP foi feito um deploy na plataforma render.com no endereço: https://test-data-stone.onrender.com/
 
 Obrigado pela atenção até o momento, são 15 anos de desenvolvimento espero que gostem do resultado.
 
