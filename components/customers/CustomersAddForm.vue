@@ -1,8 +1,9 @@
 <script setup lang="ts">
-import { onMounted } from "vue";
+import { onMounted, watch } from "vue";
 import type { ICustomers } from "~/types/Customers";
 import { useCustomerStore } from "../../stores/CustomerStore";
 import { useToast } from "vue-toastification";
+import type { IProducts } from "~/types/Products";
 
 const toast = useToast();
 const customerStore = useCustomerStore();
@@ -29,7 +30,7 @@ async function addNewCustomer(): Promise<void> {
       document: newCustomer.value.document,
       email: newCustomer.value.email,
       phone: newCustomer.value.phone,
-      useProducts: [],
+      useProducts: newCustomer.value.useProducts,
       active: newCustomer.value.active,
     });
     toast.success("Cliente adicionado com sucesso!");
@@ -58,7 +59,7 @@ async function updateCustomer(): Promise<void> {
       document: newCustomer.value.document,
       email: newCustomer.value.email,
       phone: newCustomer.value.phone,
-      useProducts: [],
+      useProducts: newCustomer.value.useProducts,
       active: newCustomer.value.active,
     });
     toast.success("Clente atualizado com sucesso!");
@@ -69,6 +70,14 @@ async function updateCustomer(): Promise<void> {
   }
 }
 
+// A função `handleAddUseProducts` é responsável por adicionar um produto selecionado
+// para o array `useProducts` do objeto `newCustomer`.
+function handleAddUseProducts(product: IProducts) {
+  newCustomer.value.useProducts.push(product);
+}
+
+// Esta função é para caso o estado do pinia para atualizar um cliente seja diferente de null
+// atualiza a ref local para os campos vir preenchidos com os dados.
 onMounted(() => {
   if (customerStore.customerToDeleteOrUpdate !== null) {
     newCustomer.value.id = customerStore.customerToDeleteOrUpdate.id;
@@ -172,7 +181,7 @@ onMounted(() => {
           class="menu-icons" />Vincular produtos ao cliente
       </section>
       <section>
-        <ProductsLinkCustomer />
+        <ProductsLinkCustomer :handleAddUseProducts="handleAddUseProducts" />
       </section>
       <button :disabled="isLoading" type="submit" class="btn-primary">
         <span v-if="!isLoading">

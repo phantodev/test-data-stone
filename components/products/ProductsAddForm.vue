@@ -57,6 +57,8 @@ async function updateProduct(): Promise<void> {
   }
 }
 
+// Esta função é para caso o estado do pinia para atualizar um produto seja diferente de null
+// atualiza a ref local para os campos vir preenchidos com os dados.
 onMounted(() => {
   if (productStore.productToDeleteOrUpdate !== null) {
     newProduct.value.id = productStore.productToDeleteOrUpdate.id;

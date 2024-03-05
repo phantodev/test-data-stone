@@ -4,6 +4,12 @@ import { useToast } from "vue-toastification";
 import { useProductStore } from "../../stores/ProductStore";
 import type { IResponseError } from "~/types/Customers";
 
+const props = defineProps({
+  handleAddUseProducts: {
+    type: Function,
+  },
+});
+
 const productStore = useProductStore();
 const isLoading = ref<boolean>(false);
 const toast = useToast();
@@ -51,13 +57,19 @@ if (productStore.products === null) {
           <td>
             <section class="container-radios">
               <label>
-                <input type="radio" :name="product.name" value="ativo" />
+                <input
+                  @click="
+                    props.handleAddUseProducts &&
+                      props.handleAddUseProducts(product)
+                  "
+                  type="radio"
+                  :name="product.name" />
                 Sim
               </label>
               <br />
 
               <label>
-                <input type="radio" :name="product.name" value="inativo" />
+                <input type="radio" :name="product.name" checked />
                 Não
               </label>
             </section>
