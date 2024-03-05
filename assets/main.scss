@@ -7,6 +7,7 @@ $white: #ffffff;
 $gray: #c3c3c3;
 $lightGray: #f3f3f3;
 $text: #363636;
+$error: #ef4444;
 
 * {
   box-sizing: border-box;
@@ -118,6 +119,26 @@ textarea {
 .label-input {
   font-weight: bold;
   font-size: 0.875rem;
+}
+
+.label-input-error {
+  @extend .label-input;
+  color: $error;
+}
+
+.input-text-error {
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  margin: 0;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-top: 0.5rem;
+  font-family: "Roboto Condensed", sans-serif;
+  border: solid 1px $error;
+  &:focus {
+    border-color: $error; /* Define a cor da borda quando o input está em foco */
+    outline: none; /* Remove a borda de foco padrão */
+  }
 }
 
 /* Customizando o container do CHECKBOX */

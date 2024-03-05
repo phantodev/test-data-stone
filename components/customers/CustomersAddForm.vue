@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from "vue";
+import { isCPFValid } from "~/utils/isCPFValid";
 import type { ICustomers } from "~/types/Customers";
 import { useCustomerStore } from "../../stores/CustomerStore";
 import { useToast } from "vue-toastification";
@@ -10,6 +11,7 @@ import * as yup from "yup";
 const toast = useToast();
 const customerStore = useCustomerStore();
 const isLoading = ref<boolean>(false);
+const isCPFError = ref<boolean>(false);
 const newCustomer = ref<ICustomers>({
   id: Math.floor(Math.random() * 1000), // Apenas uma simulação. Sabemos que é o BACK-END gera este número.
   name: "",
@@ -23,7 +25,7 @@ const newCustomer = ref<ICustomers>({
 const isButtonDisabled = computed(() => {
   const productValidationSchema = object().shape({
     name: string().required().min(3), // Requerido e deve ter no mínimo 3 caracteres
-    document: string().required().min(14), // Requerido e deve ter no mínimo 14 caracteres
+    document: string().required().min(14),
     email: string()
       .required()
       .matches(
@@ -43,6 +45,21 @@ const isButtonDisabled = computed(() => {
     return true; // Se houver erros de validação, o botão estará desabilitado
   }
 });
+
+// A função `handleCheckCPF` é responsável por verificar se o CPF (CPF
+// identificação cadastral de pessoa física) fornecida no `newCustomer`
+// objeto é válido. Isso é feito chamando a função `isCPFValid` do
+// módulo `isCPFValid` e passando o valor do CPF de `newCustomer`.
+function handleCheckCPF() {
+  if (!isCPFValid(newCustomer.value.document)) {
+    isCPFError.value = true;
+    toast.error("CPF inválido!");
+    document.getElementById("document")?.focus();
+    return;
+  } else {
+    isCPFError.value = false;
+  }
+}
 
 // Essa é uma função que iremos fazer uma simulação para adicionar um cliente.
 // Neste caso iremos adicionar um novo item no array nos dados armazenado ao PINIA.
@@ -158,15 +175,18 @@ onMounted(() => {
             placeholder="Digite o nome do cliente" />
         </section>
         <section class="container-input">
-          <label class="label-input" for="age"
+          <label
+            :class="!isCPFError ? 'label-input' : 'label-input-error'"
+            for="age"
             >Documento (CPF): (Obrigatório)</label
           >
           <input
-            class="input-text"
+            :class="!isCPFError ? 'input-text' : 'input-text-error'"
             type="text"
             id="document"
             name="document"
             autocomplete="on"
+            @blur="handleCheckCPF"
             v-model="newCustomer.document"
             v-maska
             data-maska="###.###.###-##"
