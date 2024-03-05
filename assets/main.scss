@@ -56,6 +56,11 @@ li {
   width: 100%;
 }
 
+.btn-disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
+
 .btn-actions {
   @extend .btn-base;
   width: fit-content;

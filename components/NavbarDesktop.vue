@@ -30,12 +30,6 @@ function isCurrentRoute(routePath: string): boolean {
         <img src="../assets/images/products.svg" alt="" class="menu-icons" />
         <span>Produtos</span>
       </li>
-      <li
-        :class="{ active: isCurrentRoute('/profile') }"
-        @click="navigateTo('/profile')">
-        <img src="../assets/images/profile.svg" alt="" class="menu-icons" />
-        <span>Meu Perfil</span>
-      </li>
       <li @click="authStore.logout">
         <img src="../assets/images/logout.svg" alt="" class="menu-icons" />
         <span>Logout</span>

@@ -4,6 +4,8 @@ import type { ICustomers } from "~/types/Customers";
 import { useCustomerStore } from "../../stores/CustomerStore";
 import { useToast } from "vue-toastification";
 import type { IProducts } from "~/types/Products";
+import { object, string } from "yup";
+import * as yup from "yup";
 
 const toast = useToast();
 const customerStore = useCustomerStore();
@@ -17,6 +19,31 @@ const newCustomer = ref<ICustomers>({
   useProducts: [],
   active: true,
 });
+
+const isButtonDisabled = computed(() => {
+  const productValidationSchema = object().shape({
+    name: string().required().min(3), // Requerido e deve ter no mínimo 3 caracteres
+    document: string().required().min(14), // Requerido e deve ter no mínimo 14 caracteres
+    email: string()
+      .required()
+      .matches(
+        /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      ), // Requerido e deve ser do tipo e-mail
+  });
+
+  // Valida os campos com base no esquema do YUP
+  try {
+    productValidationSchema.validateSync({
+      name: newCustomer.value.name,
+      document: newCustomer.value.document,
+      email: newCustomer.value.email,
+    });
+    return false; // Se não houver erros de validação, o botão não estará desabilitado
+  } catch (error) {
+    return true; // Se houver erros de validação, o botão estará desabilitado
+  }
+});
+
 // Essa é uma função que iremos fazer uma simulação para adicionar um cliente.
 // Neste caso iremos adicionar um novo item no array nos dados armazenado ao PINIA.
 // Se fosse um caso real, enviariamos os dados para uma API e após o retorno chamaríamos
@@ -118,7 +145,9 @@ onMounted(() => {
       ">
       <section class="grid-container">
         <section class="container-input">
-          <label class="label-input" for="name">Nome:</label>
+          <label class="label-input" for="name"
+            >Nome: (Mínimo 3 caracteres)</label
+          >
           <input
             class="input-text"
             type="text"
@@ -129,7 +158,9 @@ onMounted(() => {
             placeholder="Digite o nome do cliente" />
         </section>
         <section class="container-input">
-          <label class="label-input" for="age">Documento (CPF):</label>
+          <label class="label-input" for="age"
+            >Documento (CPF): (Obrigatório)</label
+          >
           <input
             class="input-text"
             type="text"
@@ -142,7 +173,7 @@ onMounted(() => {
             placeholder="000.000.000-00" />
         </section>
         <section class="container-input">
-          <label class="label-input" for="email">E-mail:</label>
+          <label class="label-input" for="email">E-mail: (Obrigatório)</label>
           <input
             class="input-text"
             type="email"
@@ -203,7 +234,10 @@ onMounted(() => {
           :handleRemoveUseProducts="handleRemoveUseProducts"
           :newCustomer="newCustomer" />
       </section>
-      <button :disabled="isLoading" type="submit" class="btn-primary">
+      <button
+        :disabled="isButtonDisabled"
+        type="submit"
+        :class="isButtonDisabled ? 'btn-primary btn-disabled' : 'btn-primary'">
         <span v-if="!isLoading">
           <Icon
             name="fluent:add-12-filled"

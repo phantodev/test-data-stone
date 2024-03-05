@@ -3,6 +3,8 @@ import { onMounted } from "vue";
 import type { IProducts } from "~/types/Products";
 import { useProductStore } from "../../stores/ProductStore";
 import { useToast } from "vue-toastification";
+import { object, string } from "yup";
+import * as yup from "yup";
 
 const toast = useToast();
 const productStore = useProductStore();
@@ -13,6 +15,25 @@ const newProduct = ref<IProducts>({
   description: "",
   active: true,
 });
+
+const isButtonDisabled = computed(() => {
+  const productValidationSchema = object().shape({
+    name: string().required().min(5), // Requerido e deve ter no mínimo 5 caracteres
+    description: string().required().min(50), // Requerido e deve ter no mínimo 20 caracteres
+  });
+
+  // Valida os campos com base no esquema do YUP
+  try {
+    productValidationSchema.validateSync({
+      name: newProduct.value.name,
+      description: newProduct.value.description,
+    });
+    return false; // Se não houver erros de validação, o botão não estará desabilitado
+  } catch (error) {
+    return true; // Se houver erros de validação, o botão estará desabilitado
+  }
+});
+
 // Essa é uma função que iremos fazer uma simulação para adicionar um cliente.
 // Neste caso iremos adicionar um novo item no array nos dados armazenado ao PINIA.
 // Se fosse um caso real, enviariamos os dados para uma API e após o retorno chamaríamos
@@ -34,7 +55,15 @@ async function addNewProduct(): Promise<void> {
       active: true,
     };
   } catch (error) {
-    toast.error("Não foi possível adicionar um cliente!");
+    // Se houver erros de validação, exibe as mensagens de erro
+    if (error instanceof yup.ValidationError) {
+      error.errors.forEach((errorMessage) => {
+        toast.error(errorMessage);
+      });
+    } else {
+      // Se houver outros erros, exibe uma mensagem genérica
+      toast.error("Não foi possível adicionar o produto.");
+    }
   } finally {
     isLoading.value = false;
   }
@@ -79,7 +108,9 @@ onMounted(() => {
           : updateProduct()
       ">
       <section class="container-input">
-        <label class="label-input" for="name">Nome:</label>
+        <label class="label-input" for="name"
+          >Nome: (Mínimo 5 caracteres)</label
+        >
         <input
           class="input-text"
           type="text"
@@ -89,7 +120,9 @@ onMounted(() => {
           placeholder="Digite o nome do produto" />
       </section>
       <section class="container-input">
-        <label class="label-input" for="age">Descrição:</label>
+        <label class="label-input" for="age"
+          >Descrição: (Mínimo 50 caracteres)</label
+        >
         <textarea
           class="input-textarea"
           type="number"
@@ -124,7 +157,10 @@ onMounted(() => {
           </label>
         </section>
       </section>
-      <button :disabled="isLoading" type="submit" class="btn-primary">
+      <button
+        :disabled="isButtonDisabled"
+        :class="isButtonDisabled ? 'btn-primary btn-disabled' : 'btn-primary'"
+        type="submit">
         <span v-if="!isLoading">
           <Icon
             name="fluent:add-12-filled"
