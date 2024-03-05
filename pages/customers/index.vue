@@ -26,6 +26,10 @@ function changeAction(action: string): void {
 async function handleGetAllCustomers() {
   try {
     isLoading.value = true;
+    // Simulando um atraso na chamada da API
+    await new Promise((resolve) => {
+      setTimeout(resolve, 4000);
+    });
     await customerStore.getAllCustomers();
   } catch (error) {
     toast.error((error as IResponseError).statusMessage);
@@ -71,11 +75,15 @@ productStore.$reset();
             color="fluent:add-12-filled" />Lista de Clientes
         </button>
       </section>
-      <section class="content-customers">
+      <section class="content-customers" v-if="!isLoading">
         <CustomersTableList
           :changeAction="changeAction"
           v-if="currentAction === 'list'" />
         <CustomersAddForm v-else />
+      </section>
+      <section class="loader-container" v-else>
+        <section class="loader"></section>
+        <section class="loader-text">Acessando banco</section>
       </section>
     </section>
   </NuxtLayout>

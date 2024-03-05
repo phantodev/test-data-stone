@@ -1,8 +1,5 @@
 export default defineEventHandler(async (event) => {
   // Simulando apenas uma lentidão na chamada com essa Promise.
-  await new Promise((resolve) => {
-    setTimeout(resolve, 2000);
-  });
   return {
     customers: [
       {
