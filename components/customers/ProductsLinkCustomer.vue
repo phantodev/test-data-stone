@@ -2,11 +2,17 @@
 import { computed } from "vue";
 import { useToast } from "vue-toastification";
 import { useProductStore } from "../../stores/ProductStore";
-import type { IResponseError } from "~/types/Customers";
+import type { ICustomers, IResponseError } from "~/types/Customers";
 
 const props = defineProps({
   handleAddUseProducts: {
     type: Function,
+  },
+  handleRemoveUseProducts: {
+    type: Function,
+  },
+  newCustomer: {
+    type: Object as PropType<ICustomers>,
   },
 });
 
@@ -38,6 +44,20 @@ async function handleGetAllProducts() {
 if (productStore.products === null) {
   handleGetAllProducts();
 }
+
+// Verifica se um produto está selecionado para o cliente
+function checkIfProductIsSelected(productId: number): boolean {
+  if (
+    props.newCustomer &&
+    props.newCustomer.useProducts &&
+    props.newCustomer.useProducts.length > 0
+  ) {
+    return props.newCustomer.useProducts.some(
+      (product) => product.id === productId
+    );
+  }
+  return false;
+}
 </script>
 
 <template>
@@ -63,13 +83,21 @@ if (productStore.products === null) {
                       props.handleAddUseProducts(product)
                   "
                   type="radio"
-                  :name="product.name" />
+                  :name="product.name"
+                  :checked="checkIfProductIsSelected(product.id)" />
                 Sim
               </label>
               <br />
 
               <label>
-                <input type="radio" :name="product.name" checked />
+                <input
+                  @click="
+                    props.handleRemoveUseProducts &&
+                      props.handleRemoveUseProducts(product)
+                  "
+                  type="radio"
+                  :name="product.name"
+                  :checked="!checkIfProductIsSelected(product.id)" />
                 Não
               </label>
             </section>

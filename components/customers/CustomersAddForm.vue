@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch } from "vue";
+import { onMounted } from "vue";
 import type { ICustomers } from "~/types/Customers";
 import { useCustomerStore } from "../../stores/CustomerStore";
 import { useToast } from "vue-toastification";
@@ -76,6 +76,12 @@ function handleAddUseProducts(product: IProducts) {
   newCustomer.value.useProducts.push(product);
 }
 
+// A função `handleAddUseProducts` é responsável por adicionar um produto selecionado
+// para o array `useProducts` do objeto `newCustomer`.
+function handleRemoveUseProducts(product: IProducts) {
+  console.log("Fazer a lógica para remover");
+}
+
 // Esta função é para caso o estado do pinia para atualizar um cliente seja diferente de null
 // atualiza a ref local para os campos vir preenchidos com os dados.
 onMounted(() => {
@@ -86,6 +92,9 @@ onMounted(() => {
       customerStore.customerToDeleteOrUpdate.document;
     newCustomer.value.email = customerStore.customerToDeleteOrUpdate.email;
     newCustomer.value.phone = customerStore.customerToDeleteOrUpdate.phone;
+    newCustomer.value.useProducts = [
+      ...customerStore.customerToDeleteOrUpdate.useProducts,
+    ];
     newCustomer.value.active = customerStore.customerToDeleteOrUpdate.active;
   }
 });
@@ -181,7 +190,10 @@ onMounted(() => {
           class="menu-icons" />Vincular produtos ao cliente
       </section>
       <section>
-        <ProductsLinkCustomer :handleAddUseProducts="handleAddUseProducts" />
+        <ProductsLinkCustomer
+          :handleAddUseProducts="handleAddUseProducts"
+          :handleRemoveUseProducts="handleRemoveUseProducts"
+          :newCustomer="newCustomer" />
       </section>
       <button :disabled="isLoading" type="submit" class="btn-primary">
         <span v-if="!isLoading">

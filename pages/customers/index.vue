@@ -17,6 +17,10 @@ const isLoading = ref<boolean>(false);
 
 function changeAction(action: string): void {
   currentAction.value = action;
+  // Voltando para nulo cliente a ser atualizado toda vez que entra na tela de lista
+  if (action === "list") {
+    customerStore.customerToDeleteOrUpdate = null;
+  }
 }
 
 async function handleGetAllCustomers() {
