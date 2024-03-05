@@ -85,6 +85,13 @@ li {
   flex-direction: column;
 }
 
+.container-form-login {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 1.5rem;
+}
+
 .input-text {
   border: solid 1px $gray;
   height: 2.5rem;

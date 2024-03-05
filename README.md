@@ -13,6 +13,8 @@ onde pela minha experiência é onde as aplicações quebram com mais frequênci
 o time de front-end. Os testes desenvolvidos foram bem simples, apenas para validação do meu conhecimento.
 6 - Foi desenvolvido simples SERVER APIs para servir os dados iniciais para aplicação. Após dados recuperados pela primeira vez,
 todo os dados são gerenciados pelo PINIA.
+7 - Este APP foi compartilhado públicamente via GITHUB em https://github.com/phantodev/test-data-stone
+8 - Este APP foi feito um deploy na plataforma render.com no endereço: https://test-data-stone.onrender.com/
 
 Obrigado pela atenção até o momento, são 15 anos de desenvolvimento espero que gostem do resultado.
 

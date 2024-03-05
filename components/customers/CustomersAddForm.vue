@@ -6,7 +6,6 @@ import { useCustomerStore } from "../../stores/CustomerStore";
 import { useToast } from "vue-toastification";
 import type { IProducts } from "~/types/Products";
 import { object, string } from "yup";
-import * as yup from "yup";
 
 const toast = useToast();
 const customerStore = useCustomerStore();
